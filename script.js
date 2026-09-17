@@ -1,4 +1,4 @@
-```javascript
+
 
 const formulaire = document.getElementById("formulaire-inscription"); // Récupération du formulaire
 
