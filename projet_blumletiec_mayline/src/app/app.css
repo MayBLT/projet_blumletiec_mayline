@@ -1,0 +1,324 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 60px 8% 60px 40px;
+
+  background: linear-gradient(
+    120deg,
+    #eeeeee 0%,
+    #f8f8f8 55%,
+    #e5e5e5 100%
+  );
+
+  color: #222222;
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+
+/* CARTE DU FORMULAIRE */
+
+.container {
+  width: 460px;
+  max-width: 100%;
+
+  padding: 40px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #dddddd;
+  border-radius: 16px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
+}
+
+
+/* TITRES */
+
+h1 {
+  margin: 0 0 10px;
+
+  text-align: center;
+
+  color: #c22575;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin: 0 0 32px;
+
+  text-align: center;
+
+  color: #777777;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  font-style: italic;
+}
+
+h2 {
+  margin: 32px 0 20px;
+
+  color: #b21f68;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: normal;
+
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 9px;
+}
+
+
+/* CHAMPS */
+
+.form-group {
+  margin-bottom: 21px;
+}
+
+label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #333333;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+input {
+  display: block;
+
+  width: 100%;
+  padding: 12px 13px;
+
+  background-color: #fafafa;
+
+  border: 1px solid #cccccc;
+  border-radius: 7px;
+
+  color: #222222;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background-color 0.2s;
+}
+
+input::placeholder {
+  color: #aaaaaa;
+  font-style: italic;
+}
+
+input:focus {
+  background-color: #ffffff;
+
+  border-color: #d63384;
+
+  box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.10);
+}
+
+
+/* CHAMP INVALIDE */
+
+input.ng-invalid.ng-touched {
+  border-color: #7b2cbf;
+
+  background-color: #faf7ff;
+}
+
+
+/* ERREURS */
+
+.error {
+  margin: 6px 0 0;
+
+  color: #7b2cbf;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* BOUTON */
+
+button {
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 13px;
+
+  background-color: #c22575;
+
+  border: none;
+  border-radius: 7px;
+
+  color: #ffffff;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #a91f65;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+button:disabled {
+  background-color: #bdbdbd;
+
+  color: #eeeeee;
+
+  cursor: not-allowed;
+}
+
+
+/* PAGE RECAPITULATIVE */
+
+.recap {
+  width: 500px;
+}
+
+.success {
+  margin-bottom: 30px;
+
+  text-align: center;
+
+  color: #c22575;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+}
+
+.recap-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 25px;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.recap-item span {
+  color: #777777;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+}
+
+.recap-item strong {
+  color: #222222;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  text-align: right;
+}
+
+.password-info {
+  margin-top: 25px;
+  padding: 13px;
+
+  background-color: #f7f7f7;
+
+  border-left: 3px solid #c22575;
+
+  color: #666666;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* BOUTON RETOUR */
+
+.secondary-button {
+  margin-top: 25px;
+
+  background-color: #333333;
+}
+
+.secondary-button:hover {
+  background-color: #222222;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+
+  .page {
+    padding: 30px 20px;
+
+    justify-content: center;
+  }
+
+  .container {
+    width: 460px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .page {
+    padding: 20px 15px;
+  }
+
+  .container {
+    padding: 28px 22px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .recap-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .recap-item strong {
+    text-align: left;
+  }
+}

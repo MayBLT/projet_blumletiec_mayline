@@ -1,0 +1,484 @@
+@if (!submitted) {
+
+  <div class="page">
+    <div class="container">
+
+      <h1>Créer un compte</h1>
+
+      <p class="subtitle">
+        Veuillez renseigner les informations demandées
+      </p>
+
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- LOGIN -->
+        <div class="form-group">
+
+          <label for="login">Login</label>
+
+          <input
+            type="text"
+            id="login"
+            name="login"
+            [(ngModel)]="login"
+            #loginControl="ngModel"
+            required
+            minlength="3"
+            pattern="^[a-zA-Z0-9_-]+$"
+            placeholder="Ex : mayline_blum"
+          >
+
+          @if (loginControl.invalid && loginControl.touched) {
+
+            @if (loginControl.errors?.['required']) {
+              <p class="error">
+                Le login est obligatoire.
+              </p>
+            }
+
+            @if (loginControl.errors?.['minlength']) {
+              <p class="error">
+                Le login doit contenir au moins 3 caractères.
+              </p>
+            }
+
+            @if (loginControl.errors?.['pattern']) {
+              <p class="error">
+                Le login ne peut contenir que des lettres, chiffres, _ ou -.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- MOT DE PASSE -->
+        <div class="form-group">
+
+          <label for="password">Mot de passe</label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            #passwordControl="ngModel"
+            required
+            minlength="8"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+            placeholder="Minimum 8 caractères"
+          >
+
+          @if (passwordControl.invalid && passwordControl.touched) {
+
+            @if (passwordControl.errors?.['required']) {
+              <p class="error">
+                Le mot de passe est obligatoire.
+              </p>
+            }
+
+            @if (
+              passwordControl.errors?.['minlength'] ||
+              passwordControl.errors?.['pattern']
+            ) {
+              <p class="error">
+                Le mot de passe doit contenir au moins 8 caractères,
+                une majuscule, une minuscule et un chiffre.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- CONFIRMATION -->
+        <div class="form-group">
+
+          <label for="confirmPassword">
+            Confirmation du mot de passe
+          </label>
+
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            #confirmPasswordControl="ngModel"
+            required
+            placeholder="Retapez votre mot de passe"
+          >
+
+          @if (
+            confirmPasswordControl.invalid &&
+            confirmPasswordControl.touched
+          ) {
+
+            @if (confirmPasswordControl.errors?.['required']) {
+              <p class="error">
+                La confirmation du mot de passe est obligatoire.
+              </p>
+            }
+
+          }
+
+          @if (
+            confirmPasswordControl.valid &&
+            password !== confirmPassword
+          ) {
+            <p class="error">
+              Les mots de passe ne correspondent pas.
+            </p>
+          }
+
+        </div>
+
+
+        <!-- NOM -->
+        <div class="form-group">
+
+          <label for="nom">Nom</label>
+
+          <input
+            type="text"
+            id="nom"
+            name="nom"
+            [(ngModel)]="nom"
+            #nomControl="ngModel"
+            required
+            pattern="^[a-zA-ZÀ-ÿ' -]+$"
+            placeholder="Ex : Blum"
+          >
+
+          @if (nomControl.invalid && nomControl.touched) {
+
+            @if (nomControl.errors?.['required']) {
+              <p class="error">
+                Le nom est obligatoire.
+              </p>
+            }
+
+            @if (nomControl.errors?.['pattern']) {
+              <p class="error">
+                Le nom contient des caractères invalides.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- PRENOM -->
+        <div class="form-group">
+
+          <label for="prenom">Prénom</label>
+
+          <input
+            type="text"
+            id="prenom"
+            name="prenom"
+            [(ngModel)]="prenom"
+            #prenomControl="ngModel"
+            required
+            pattern="^[a-zA-ZÀ-ÿ' -]+$"
+            placeholder="Ex : Mayline"
+          >
+
+          @if (prenomControl.invalid && prenomControl.touched) {
+
+            @if (prenomControl.errors?.['required']) {
+              <p class="error">
+                Le prénom est obligatoire.
+              </p>
+            }
+
+            @if (prenomControl.errors?.['pattern']) {
+              <p class="error">
+                Le prénom contient des caractères invalides.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="form-group">
+
+          <label for="email">Email</label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            #emailControl="ngModel"
+            required
+            email
+            placeholder="Ex : mayline@email.fr"
+          >
+
+          @if (emailControl.invalid && emailControl.touched) {
+
+            @if (emailControl.errors?.['required']) {
+              <p class="error">
+                L'adresse email est obligatoire.
+              </p>
+            }
+
+            @if (emailControl.errors?.['email']) {
+              <p class="error">
+                Veuillez saisir une adresse email valide.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- ADRESSE -->
+        <h2>Adresse</h2>
+
+
+        <!-- NUMERO -->
+        <div class="form-group">
+
+          <label for="numero">Numéro</label>
+
+          <input
+            type="text"
+            id="numero"
+            name="numero"
+            [(ngModel)]="numero"
+            #numeroControl="ngModel"
+            required
+            pattern="^[0-9]+$"
+            placeholder="Ex : 12"
+          >
+
+          @if (numeroControl.invalid && numeroControl.touched) {
+
+            @if (numeroControl.errors?.['required']) {
+              <p class="error">
+                Le numéro est obligatoire.
+              </p>
+            }
+
+            @if (numeroControl.errors?.['pattern']) {
+              <p class="error">
+                Le numéro doit contenir uniquement des chiffres.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- RUE -->
+        <div class="form-group">
+
+          <label for="rue">Rue</label>
+
+          <input
+            type="text"
+            id="rue"
+            name="rue"
+            [(ngModel)]="rue"
+            #rueControl="ngModel"
+            required
+            minlength="2"
+            placeholder="Ex : rue de Strasbourg"
+          >
+
+          @if (rueControl.invalid && rueControl.touched) {
+
+            @if (rueControl.errors?.['required']) {
+              <p class="error">
+                La rue est obligatoire.
+              </p>
+            }
+
+            @if (rueControl.errors?.['minlength']) {
+              <p class="error">
+                Veuillez saisir une rue valide.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- CODE POSTAL -->
+        <div class="form-group">
+
+          <label for="codePostal">Code postal</label>
+
+          <input
+            type="text"
+            id="codePostal"
+            name="codePostal"
+            [(ngModel)]="codePostal"
+            #codePostalControl="ngModel"
+            required
+            pattern="^[0-9]{5}$"
+            maxlength="5"
+            placeholder="Ex : 67000"
+          >
+
+          @if (
+            codePostalControl.invalid &&
+            codePostalControl.touched
+          ) {
+
+            @if (codePostalControl.errors?.['required']) {
+              <p class="error">
+                Le code postal est obligatoire.
+              </p>
+            }
+
+            @if (codePostalControl.errors?.['pattern']) {
+              <p class="error">
+                Le code postal doit contenir exactement 5 chiffres.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- VILLE -->
+        <div class="form-group">
+
+          <label for="ville">Ville</label>
+
+          <input
+            type="text"
+            id="ville"
+            name="ville"
+            [(ngModel)]="ville"
+            #villeControl="ngModel"
+            required
+            pattern="^[a-zA-ZÀ-ÿ' -]+$"
+            placeholder="Ex : Strasbourg"
+          >
+
+          @if (villeControl.invalid && villeControl.touched) {
+
+            @if (villeControl.errors?.['required']) {
+              <p class="error">
+                La ville est obligatoire.
+              </p>
+            }
+
+            @if (villeControl.errors?.['pattern']) {
+              <p class="error">
+                Le nom de la ville contient des caractères invalides.
+              </p>
+            }
+
+          }
+
+        </div>
+
+
+        <!-- BOUTON -->
+        <button
+          type="submit"
+          [disabled]="
+            signupForm.invalid ||
+            password !== confirmPassword
+          "
+        >
+          Créer mon compte
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+}
+
+
+<!-- RECAPITULATIF -->
+
+@if (submitted) {
+
+  <div class="page">
+
+    <div class="container recap">
+
+      <h1>Inscription réussie</h1>
+
+      <p class="success">
+        Votre compte a été enregistré avec succès.
+      </p>
+
+      <h2>Récapitulatif</h2>
+
+
+      <div class="recap-item">
+        <span>Login</span>
+        <strong>{{ login }}</strong>
+      </div>
+
+      <div class="recap-item">
+        <span>Nom</span>
+        <strong>{{ nom }}</strong>
+      </div>
+
+      <div class="recap-item">
+        <span>Prénom</span>
+        <strong>{{ prenom }}</strong>
+      </div>
+
+      <div class="recap-item">
+        <span>Email</span>
+        <strong>{{ email }}</strong>
+      </div>
+
+
+      <h2>Adresse</h2>
+
+      <div class="recap-item">
+        <span>Adresse</span>
+        <strong>
+          {{ numero }} {{ rue }}
+        </strong>
+      </div>
+
+      <div class="recap-item">
+        <span>Code postal</span>
+        <strong>{{ codePostal }}</strong>
+      </div>
+
+      <div class="recap-item">
+        <span>Ville</span>
+        <strong>{{ ville }}</strong>
+      </div>
+
+
+      <p class="password-info">
+        Le mot de passe n'est pas affiché pour des raisons de sécurité.
+      </p>
+
+      <button
+        type="button"
+        class="secondary-button"
+        (click)="resetForm()"
+      >
+        Retour au formulaire
+      </button>
+
+    </div>
+
+  </div>
+
+}
