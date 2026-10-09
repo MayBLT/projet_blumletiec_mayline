@@ -1,0 +1,92 @@
+/* Conteneur du formulaire */
+form {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Titre du formulaire */
+h2 {
+  margin-bottom: 24px;
+  color: #7c3aed;
+}
+
+/* Organisation de chaque champ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+/* Libellés des champs */
+label {
+  margin-bottom: 7px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Champs de saisie et listes déroulantes */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+/* Mise en évidence du champ sélectionné */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+}
+
+/* Affichage des coordonnées sur deux colonnes */
+.coordinates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Messages de validation */
+.error {
+  display: block;
+  margin-top: 5px;
+  color: #dc2626;
+}
+
+/* Bouton de validation */
+button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 7px;
+  background-color: #7c3aed;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Changement de couleur au survol */
+button:hover {
+  background-color: #6d28d9;
+}
+
+/* Adaptation aux petits écrans */
+@media (max-width: 600px) {
+  form {
+    padding: 16px;
+  }
+
+  .coordinates {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
