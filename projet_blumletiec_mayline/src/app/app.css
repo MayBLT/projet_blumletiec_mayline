@@ -1,0 +1,43 @@
+/* Mise en forme générale de la page */
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #f5f3ff;
+}
+
+/* Conteneur central de l'application */
+.container {
+  width: min(100% - 32px, 760px);
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+/* En-tête de la page */
+.page-header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+/* Titre principal */
+.page-header h1 {
+  margin-bottom: 10px;
+  color: #6d28d9;
+}
+
+/* Texte d'introduction */
+.page-header p {
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* Adaptation aux petits écrans */
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 20px, 760px);
+    padding: 24px 0;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+}
