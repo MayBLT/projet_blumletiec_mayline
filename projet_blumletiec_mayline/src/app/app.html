@@ -1,0 +1,22 @@
+<!-- Conteneur principal de l'application -->
+<main class="container">
+
+  <!-- En-tête de la page -->
+  <header class="page-header">
+    <h1>Déclaration de pollution</h1>
+    <p>Signalez une pollution et renseignez sa localisation.</p>
+  </header>
+
+  <!-- Affiche le formulaire tant qu'aucune déclaration n'est validée -->
+  <app-pollution-form
+    *ngIf="pollutionDeclaree === null"
+    (pollutionValidated)="afficherRecapitulatif($event)">
+  </app-pollution-form>
+
+  <!-- Affiche le récapitulatif après la validation du formulaire -->
+  <app-pollution-summary
+    *ngIf="pollutionDeclaree !== null"
+    [pollution]="pollutionDeclaree">
+  </app-pollution-summary>
+
+</main>

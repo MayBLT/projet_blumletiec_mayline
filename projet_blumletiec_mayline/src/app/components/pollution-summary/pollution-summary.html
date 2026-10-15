@@ -1,0 +1,39 @@
+<!-- Conteneur principal du récapitulatif -->
+<section class="summary">
+
+  <!-- Titre du récapitulatif -->
+  <h2>Récapitulatif de la pollution</h2>
+
+  <!-- Affiche les informations de la pollution -->
+  <p><strong>Titre :</strong> {{ pollution.titre }}</p>
+  <p><strong>Type :</strong> {{ pollution.type }}</p>
+  <p><strong>Description :</strong> {{ pollution.description }}</p>
+  <p><strong>Date :</strong> {{ pollution.date }}</p>
+  <!-- Affichage de l'adresse de la pollution -->
+    <h3>Localisation</h3>
+
+    <p><strong>Code postal :</strong> {{ pollution.codePostal }}</p>
+    <p><strong>Ville :</strong> {{ pollution.ville }}</p>
+    <p><strong>Pays :</strong> {{ pollution.pays }}</p>
+
+    <!-- La rue n'est affichée que si elle a été renseignée -->
+    <p *ngIf="pollution.rue">
+    <strong>Rue :</strong> {{ pollution.rue }}
+    </p>
+
+<!-- Le numéro n'est affiché que s'il a été renseigné -->
+<p *ngIf="pollution.numero">
+  <strong>Numéro :</strong> {{ pollution.numero }}
+</p>
+  <p><strong>Latitude :</strong> {{ pollution.latitude }}</p>
+  <p><strong>Longitude :</strong> {{ pollution.longitude }}</p>
+
+  <!-- Affiche la photo uniquement si une URL a été renseignée -->
+  <div *ngIf="pollution.photoUrl">
+    <h3>Photo</h3>
+
+    <!-- Utilise l'URL de la photo et définit un texte alternatif -->
+    <img [src]="pollution.photoUrl" alt="Photo de la pollution">
+  </div>
+
+</section>

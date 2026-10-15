@@ -1,0 +1,185 @@
+<!-- Formulaire de déclaration d'une pollution -->
+<form [formGroup]="pollutionForm" (ngSubmit)="onSubmit()">
+
+  <h2>Déclarer une pollution</h2>
+
+  <!-- Champ du titre -->
+  <div class="form-group">
+    <label for="titre">Titre *</label>
+    <input id="titre" type="text" formControlName="titre"
+      placeholder="Ex. : Pollution de la rivière">
+
+    <!-- Affiche un message si le titre est invalide -->
+    <small class="error" *ngIf="pollutionForm.get('titre')?.touched
+      && pollutionForm.get('titre')?.hasError('required')">
+      Le titre est obligatoire.
+    </small>
+    <small class="error" *ngIf="pollutionForm.get('titre')?.touched
+      && pollutionForm.get('titre')?.hasError('minlength')">
+      Le titre doit contenir au moins 3 caractères.
+    </small>
+  </div>
+
+  <!-- Sélection du type de pollution -->
+  <div class="form-group">
+    <label for="type">Type de pollution *</label>
+    <select id="type" formControlName="type">
+      <option value="">Choisir un type</option>
+      <option value="Air">Pollution de l'air</option>
+      <option value="Eau">Pollution de l'eau</option>
+      <option value="Sol">Pollution du sol</option>
+      <option value="Sonore">Pollution sonore</option>
+      <option value="Autre">Autre</option>
+    </select>
+
+    <!-- Message affiché si aucun type n'est sélectionné -->
+    <small class="error" *ngIf="pollutionForm.get('type')?.touched
+      && pollutionForm.get('type')?.invalid">
+      Veuillez sélectionner un type de pollution.
+    </small>
+  </div>
+
+  <!-- Champ de description -->
+  <div class="form-group">
+    <label for="description">Description *</label>
+    <textarea id="description" formControlName="description" rows="4"
+      placeholder="Décrivez la pollution constatée..."></textarea>
+
+    <!-- Vérifie que la description est suffisamment longue -->
+    <small class="error" *ngIf="pollutionForm.get('description')?.touched
+      && pollutionForm.get('description')?.hasError('required')">
+      La description est obligatoire.
+    </small>
+    <small class="error" *ngIf="pollutionForm.get('description')?.touched
+      && pollutionForm.get('description')?.hasError('minlength')">
+      La description doit contenir au moins 10 caractères.
+    </small>
+  </div>
+
+  <!-- Date à laquelle la pollution a été constatée -->
+  <div class="form-group">
+    <label for="date">Date de constatation *</label>
+    <input id="date" type="date" formControlName="date">
+
+    <small class="error" *ngIf="pollutionForm.get('date')?.touched
+      && pollutionForm.get('date')?.invalid">
+      La date est obligatoire.
+    </small>
+  </div>
+
+<!-- Code postal du lieu -->
+<div class="form-group">
+  <label for="codePostal">Code postal *</label>
+  <input
+    id="codePostal"
+    type="text"
+    formControlName="codePostal"
+    placeholder="Ex. : 67000"
+    autocomplete="postal-code">
+
+  <!-- Message si le code postal est manquant -->
+  <small class="error"
+    *ngIf="pollutionForm.get('codePostal')?.touched
+    && pollutionForm.get('codePostal')?.invalid">
+    Le code postal est obligatoire.
+  </small>
+</div>
+
+<!-- Ville du lieu -->
+<div class="form-group">
+  <label for="ville">Ville *</label>
+  <input
+    id="ville"
+    type="text"
+    formControlName="ville"
+    placeholder="Ex. : Strasbourg"
+    autocomplete="address-level2">
+
+  <!-- Message si la ville est manquante -->
+  <small class="error"
+    *ngIf="pollutionForm.get('ville')?.touched
+    && pollutionForm.get('ville')?.invalid">
+    La ville est obligatoire.
+  </small>
+</div>
+
+<!-- Pays du lieu -->
+<div class="form-group">
+  <label for="pays">Pays *</label>
+  <input
+    id="pays"
+    type="text"
+    formControlName="pays"
+    placeholder="Ex. : France"
+    autocomplete="country-name">
+
+  <!-- Message si le pays est manquant -->
+  <small class="error"
+    *ngIf="pollutionForm.get('pays')?.touched
+    && pollutionForm.get('pays')?.invalid">
+    Le pays est obligatoire.
+  </small>
+</div>
+
+<!-- Rue facultative -->
+<div class="form-group">
+  <label for="rue">Rue (facultatif)</label>
+  <input
+    id="rue"
+    type="text"
+    formControlName="rue"
+    placeholder="Ex. : rue de la Mésange"
+    autocomplete="address-line1">
+</div>
+
+<!-- Numéro de rue facultatif -->
+<div class="form-group">
+  <label for="numero">Numéro (facultatif)</label>
+  <input
+    id="numero"
+    type="text"
+    formControlName="numero"
+    placeholder="Ex. : 12"
+    autocomplete="address-line2">
+</div>
+
+  <!-- Coordonnées géographiques -->
+  <div class="coordinates">
+
+    <div class="form-group">
+      <label for="latitude">Latitude *</label>
+      <input id="latitude" type="number" step="any"
+        formControlName="latitude" placeholder="Ex. : 48.5734">
+
+      <!-- Une latitude est comprise entre -90 et 90 -->
+      <small class="error" *ngIf="pollutionForm.get('latitude')?.touched
+        && pollutionForm.get('latitude')?.invalid">
+        La latitude doit être comprise entre -90 et 90.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="longitude">Longitude *</label>
+      <input id="longitude" type="number" step="any"
+        formControlName="longitude" placeholder="Ex. : 7.7521">
+
+      <!-- Une longitude est comprise entre -180 et 180 -->
+      <small class="error" *ngIf="pollutionForm.get('longitude')?.touched
+        && pollutionForm.get('longitude')?.invalid">
+        La longitude doit être comprise entre -180 et 180.
+      </small>
+    </div>
+
+  </div>
+
+  <!-- URL facultative vers une photo -->
+  <div class="form-group">
+    <label for="photoUrl">URL de la photo (facultatif)</label>
+    <input id="photoUrl" type="url" formControlName="photoUrl"
+      placeholder="https://exemple.fr/photo.jpg">
+  </div>
+
+  <!-- Bouton de validation du formulaire -->
+  <button type="submit">Valider la déclaration</button>
+
+</form>

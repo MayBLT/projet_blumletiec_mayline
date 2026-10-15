@@ -1,0 +1,30 @@
+/* Mise en forme du conteneur du récapitulatif */
+.summary {
+  padding: 24px; /* Espace intérieur */
+  background-color: #ffffff; /* Fond blanc */
+  border-radius: 12px; /* Coins arrondis */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Ombre légère */
+}
+
+/* Mise en forme du titre */
+h2 {
+  color: #7c3aed; /* Couleur violette */
+  margin-bottom: 20px; /* Espace sous le titre */
+}
+
+/* Espacement et couleur des informations */
+p {
+  margin: 12px 0;
+  color: #374151;
+  overflow-wrap: anywhere; /* Évite les débordements de texte */
+}
+
+/* Mise en forme de la photo */
+img {
+  display: block;
+  max-width: 100%; /* La photo ne dépasse pas son conteneur */
+  max-height: 400px; /* Limite la hauteur de la photo */
+  object-fit: contain; /* Conserve les proportions de l'image */
+  border-radius: 8px;
+  margin-top: 12px;
+}
