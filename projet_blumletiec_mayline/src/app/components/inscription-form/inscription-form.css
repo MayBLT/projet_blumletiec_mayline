@@ -1,0 +1,200 @@
+
+/* Palette générale de la page d'inscription */
+:host {
+  display: block;
+  padding: 40px 20px;
+  color: #292431;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Carte principale du formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 36px;
+
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #eee5f1;
+  border-radius: 22px;
+
+  box-shadow:
+    0 15px 45px rgba(80, 50, 100, 0.08),
+    0 3px 10px rgba(220, 150, 185, 0.08);
+}
+
+/* Titre du formulaire */
+h2 {
+  margin: 0 0 4px;
+  color: #382b43;
+  font-size: 28px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+  text-align: center;
+}
+
+/* Ligne décorative sous le titre */
+h2::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 4px;
+  margin: 14px auto 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #e9a9c5, #9470d2);
+}
+
+/* Organisation de chaque champ */
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Libellés */
+label {
+  color: #49404f;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+/* Champs de saisie */
+input {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  color: #292431;
+  background: #fbf9fc;
+  border: 1px solid #e3dce9;
+  border-radius: 10px;
+
+  font: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Apparence du champ actif */
+input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #9871d1;
+  box-shadow: 0 0 0 4px rgba(152, 113, 209, 0.14);
+}
+
+/* Champs invalides après interaction */
+input.ng-touched.ng-invalid {
+  border-color: #d96b9b;
+}
+
+/* Bouton principal */
+button {
+  width: 100%;
+  min-height: 49px;
+  margin-top: 4px;
+  padding: 13px 18px;
+
+  color: #ffffff;
+  background: linear-gradient(110deg, #d979a6, #8a5ac1);
+  border: none;
+  border-radius: 11px;
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(138, 90, 193, 0.22);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* Effet au survol du bouton */
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 23px rgba(138, 90, 193, 0.3);
+}
+
+/* Effet au clic */
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Bouton désactivé pendant l'envoi */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Messages d'erreur */
+.erreur-champ,
+.message-erreur {
+  color: #b83270;
+}
+
+.erreur-champ {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Message de retour de l'API */
+.message-succes,
+.message-erreur {
+  margin: 0;
+  padding: 13px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.message-succes {
+  color: #356548;
+  background: #eff8f1;
+  border: 1px solid #d4ead9;
+}
+
+.message-erreur {
+  color: #a52d64;
+  background: #fff1f6;
+  border: 1px solid #f4c9da;
+}
+
+/* Adaptation aux écrans mobiles */
+@media (max-width: 600px) {
+  :host {
+    padding: 20px 12px;
+  }
+
+  form {
+    padding: 24px 20px;
+    gap: 17px;
+    border-radius: 17px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+}
+
+/* Respecte les préférences de réduction des animations */
+@media (prefers-reduced-motion: reduce) {
+  input,
+  button {
+    transition: none;
+  }
+}

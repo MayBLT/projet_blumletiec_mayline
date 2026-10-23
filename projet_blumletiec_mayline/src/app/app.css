@@ -1,43 +1,60 @@
-/* Mise en forme générale de la page */
+
+/* Fond général rose et lavande très léger */
 :host {
   display: block;
   min-height: 100vh;
-  background-color: #f5f3ff;
+  background:
+    radial-gradient(
+      ellipse at 10% 10%,
+      rgba(244, 199, 217, 0.32),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 90% 80%,
+      rgba(201, 184, 242, 0.3),
+      transparent 42%
+    ),
+    #f9f7fb;
 }
 
-/* Conteneur central de l'application */
+/* Conteneur de la page */
 .container {
-  width: min(100% - 32px, 760px);
-  margin: 0 auto;
-  padding: 40px 0;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 36px 20px 50px;
 }
 
-/* En-tête de la page */
+/* En-tête */
 .page-header {
-  margin-bottom: 28px;
+  margin: 0 auto 28px;
   text-align: center;
 }
 
 /* Titre principal */
 .page-header h1 {
-  margin-bottom: 10px;
-  color: #6d28d9;
+  margin: 0 0 10px;
+  color: #382b43;
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
 }
 
-/* Texte d'introduction */
+/* Sous-titre */
 .page-header p {
-  color: #4b5563;
-  line-height: 1.5;
+  margin: 0;
+  color: #77707e;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-/* Adaptation aux petits écrans */
+/* Adaptation mobile */
 @media (max-width: 600px) {
   .container {
-    width: min(100% - 20px, 760px);
-    padding: 24px 0;
+    padding: 24px 12px 35px;
   }
 
-  .page-header h1 {
-    font-size: 26px;
+  .page-header {
+    margin-bottom: 20px;
   }
 }
