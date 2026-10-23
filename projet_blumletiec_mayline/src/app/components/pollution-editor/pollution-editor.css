@@ -1,0 +1,46 @@
+
+.editor-page {
+  width: min(100% - 2rem, 1000px);
+  margin: 2rem auto;
+}
+
+.page-header {
+  margin: 1.5rem 0;
+}
+
+.page-header h1 {
+  margin-bottom: 0.5rem;
+  color: #35264d;
+}
+
+.page-header p {
+  color: #665a78;
+  line-height: 1.6;
+}
+
+.back-link {
+  color: #7041a6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.info-message,
+.error-message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.info-message {
+  background: #f0ebf8;
+  color: #493366;
+}
+
+.error-message {
+  background: #fff0f0;
+  color: #a12626;
+}

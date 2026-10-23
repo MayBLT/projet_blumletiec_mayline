@@ -1,0 +1,34 @@
+
+<section class="editor-page">
+  <a class="back-link" routerLink="/pollutions">
+    ← Retour à la liste
+  </a>
+
+  <header class="page-header">
+    <h1>
+      {{ pollutionId === null
+        ? 'Nouvelle déclaration'
+        : 'Modifier une déclaration' }}
+    </h1>
+
+    <p>
+      {{ pollutionId === null
+        ? 'Renseignez les informations concernant la pollution constatée.'
+        : 'Modifiez les informations de cette déclaration.' }}
+    </p>
+  </header>
+
+  <p class="info-message" *ngIf="chargement">
+    Chargement de la déclaration...
+  </p>
+
+  <p class="error-message" *ngIf="erreurMessage" role="alert">
+    {{ erreurMessage }}
+  </p>
+
+  <app-pollution-form
+    *ngIf="!chargement && (pollutionId === null || pollution !== null)"
+    [pollution]="pollution"
+    (pollutionValidated)="enregistrer($event)">
+  </app-pollution-form>
+</section>

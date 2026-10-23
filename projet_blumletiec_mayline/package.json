@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:projet1": "node dist/projet1/server/server.mjs"
+    "serve:ssr:projet1": "node dist/projet1/server/server.mjs",
+    "api": "json-server --watch api/db.json --port 3000"
   },
   "private": true,
   "packageManager": "npm@11.19.0",
@@ -31,6 +32,7 @@
     "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
     "jsdom": "^30.0.0",
+    "json-server": "^0.17.4",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
     "vitest": "^5.0.0"

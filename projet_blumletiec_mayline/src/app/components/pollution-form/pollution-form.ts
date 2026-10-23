@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+
+ // Importe les outils nécessaires au composant Angular.
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 // Importe les directives Angular communes, notamment *ngIf.
 import { CommonModule } from '@angular/common';
@@ -18,25 +27,30 @@ import { Pollution } from '../../models/pollution';
   // Nom de la balise HTML permettant d'utiliser le composant.
   selector: 'app-pollution-form',
 
-  // Module nécessaire à l'utilisation des formulaires réactifs.
-  imports: [CommonModule,ReactiveFormsModule],
+  // Modules nécessaires au fonctionnement du composant.
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 
   // Fichiers HTML et CSS associés au composant.
   templateUrl: './pollution-form.html',
   styleUrl: './pollution-form.css',
 })
-export class PollutionForm {
+export class PollutionForm implements OnChanges {
   // Contient les champs et les règles de validation du formulaire.
   pollutionForm: FormGroup;
 
   // Émet les données lorsque le formulaire est valide.
   @Output() pollutionValidated = new EventEmitter<Pollution>();
 
+  // Pollution reçue du composant parent en mode modification.
+  @Input() pollution: Pollution | null = null;
+
   // Initialise le formulaire et définit les validations de chaque champ.
   constructor(private formBuilder: FormBuilder) {
     this.pollutionForm = this.formBuilder.group({
       // Le titre est obligatoire et doit contenir au moins 3 caractères.
       titre: ['', [Validators.required, Validators.minLength(3)]],
+      
 
       // Le type de pollution doit être sélectionné.
       type: ['', Validators.required],
@@ -75,10 +89,20 @@ export class PollutionForm {
       // L'URL de la photo est facultative.
       photoUrl: [''],
     });
+    console.log('Formulaire initialisé :', this.pollutionForm);
+  }
+
+  // Détecte l'arrivée d'une déclaration à modifier.
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['pollution'] && this.pollution !== null) {
+      // Préremplit le formulaire avec les données existantes.
+      this.pollutionForm.patchValue(this.pollution);
+    }
   }
 
   // Vérifie le formulaire et transmet les données si elles sont valides.
   onSubmit(): void {
+  console.log('Le formulaire a été soumis');
     // Si le formulaire est invalide, affiche les erreurs de validation.
     if (this.pollutionForm.invalid) {
       this.pollutionForm.markAllAsTouched();
@@ -88,6 +112,13 @@ export class PollutionForm {
     // Récupère les valeurs saisies et les convertit au format du modèle.
     const pollution: Pollution = {
       ...this.pollutionForm.value,
+
+      // Conserve l'identifiant si la déclaration est modifiée.
+      ...(this.pollution?.id !== undefined
+        ? { id: this.pollution.id }
+        : {}),
+
+      // Convertit les coordonnées en nombres.
       latitude: Number(this.pollutionForm.value.latitude),
       longitude: Number(this.pollutionForm.value.longitude),
     };

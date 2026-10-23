@@ -3,6 +3,10 @@
  * Elle définit les informations nécessaires à la déclaration.
  */
 export interface Pollution {
+    // Identifiant généré par le backend lors de la création.
+  id?: number;
+
+  
   titre: string;       // Titre de la déclaration
   type: string;        // Type de pollution
   description: string; // Description de la pollution
