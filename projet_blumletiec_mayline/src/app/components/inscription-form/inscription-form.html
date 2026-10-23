@@ -1,0 +1,93 @@
+
+<!-- Formulaire d'inscription relié au formulaire réactif du composant. -->
+<form [formGroup]="formulaire" (ngSubmit)="onSubmit()">
+
+  <h2>Créer un compte</h2>
+
+  <!-- Champ du nom de l'utilisateur. -->
+  <div class="champ">
+    <label for="nom">Nom</label>
+
+    <input
+      id="nom"
+      type="text"
+      formControlName="nom"
+      autocomplete="name"
+    />
+
+    <!-- Le message apparaît si le champ a été touché et reste invalide. -->
+    
+<p
+  class="erreur-champ"
+  *ngIf="formulaire.controls.nom.touched
+    && formulaire.controls.nom.invalid"
+>
+  <span *ngIf="formulaire.controls.nom.errors?.['required']">
+    Le nom est obligatoire.
+  </span>
+
+  <span *ngIf="formulaire.controls.nom.errors?.['pattern']">
+    Le nom doit contenir uniquement des lettres, espaces, tirets ou apostrophes.
+  </span>
+</p>
+
+  </div>
+
+  <!-- Champ de l'adresse e-mail. -->
+  <div class="champ">
+    <label for="email">Adresse e-mail</label>
+
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      autocomplete="email"
+    />
+
+    <!-- Vérifie que l'adresse est renseignée et respecte le format attendu. -->
+    <p
+      class="erreur-champ"
+      *ngIf="formulaire.controls.email.touched
+        && formulaire.controls.email.invalid"
+    >
+      Veuillez saisir une adresse e-mail valide.
+    </p>
+  </div>
+
+  <!-- Champ du mot de passe. -->
+  <div class="champ">
+    <label for="motDePasse">Mot de passe</label>
+
+    <input
+      id="motDePasse"
+      type="password"
+      formControlName="motDePasse"
+      autocomplete="new-password"
+    />
+
+    <!-- Le mot de passe doit contenir au moins huit caractères. -->
+    <p
+      class="erreur-champ"
+      *ngIf="formulaire.controls.motDePasse.touched
+        && formulaire.controls.motDePasse.invalid"
+    >
+      Le mot de passe doit contenir au moins 8 caractères.
+    </p>
+  </div>
+
+  <!-- Le bouton est désactivé pendant l'envoi de la requête HTTP. -->
+  <button type="submit" [disabled]="envoiEnCours">
+    {{ envoiEnCours ? 'Envoi en cours...' : 'S’inscrire' }}
+  </button>
+
+  <!-- Affiche le résultat de la requête au retour du serveur. -->
+  <p
+    *ngIf="message"
+    [class.message-erreur]="erreur"
+    [class.message-succes]="!erreur"
+    role="status"
+  >
+    {{ message }}
+  </p>
+
+</form>
