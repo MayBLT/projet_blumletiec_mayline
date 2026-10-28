@@ -28,6 +28,7 @@ export class PollutionEditor implements OnInit {
 
   chargement = false;
   erreurMessage = '';
+  envoiEnCours = false;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -71,7 +72,10 @@ export class PollutionEditor implements OnInit {
   }
 
   enregistrer(pollution: Pollution): void {
+    console.log('Événement reçu par enregistrer()', pollution);
+
     this.erreurMessage = '';
+    this.envoiEnCours = true;
 
     // Création d'une nouvelle déclaration.
     if (this.pollutionId === null) {

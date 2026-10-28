@@ -182,8 +182,8 @@
   </div>
 
   <!-- Bouton de validation du formulaire -->
-  <button type="submit">
-    {{ pollution ? 'Enregistrer les modifications' : 'Valider la déclaration' }}
-  </button>
+  <button type="submit" [disabled]="isSubmitting">
+  {{ isSubmitting ? 'Envoi en cours...' : 'Valider la déclaration' }}
+</button>
 
 </form>

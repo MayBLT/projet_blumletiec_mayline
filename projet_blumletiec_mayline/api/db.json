@@ -14,6 +14,36 @@
       "longitude": 55,
       "photoUrl": "",
       "id": 1
+    },
+    {
+      "titre": "test mayline",
+      "type": "Eau",
+      "description": "des dechets presents au milieu des poissons",
+      "date": "2026-10-28",
+      "codePostal": "67000",
+      "ville": "STRASBOURG",
+      "pays": "France",
+      "rue": "Boulevard d'Anvers",
+      "numero": "",
+      "latitude": 44,
+      "longitude": 44,
+      "photoUrl": "",
+      "id": 2
+    },
+    {
+      "titre": "pollution dans l'Ill",
+      "type": "Eau",
+      "description": "Plusieurs poissons morts, des vélos au milieu des ragondins",
+      "date": "2026-10-20",
+      "codePostal": "67000",
+      "ville": "STRASBOURG",
+      "pays": "France",
+      "rue": "",
+      "numero": "",
+      "latitude": 48,
+      "longitude": 7.7,
+      "photoUrl": "",
+      "id": 3
     }
   ]
 }

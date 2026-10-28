@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:projet1": "node dist/projet1/server/server.mjs",
-    "api": "json-server --watch api/db.json --port 3000"
+    "api": "npx json-server --watch api/db.json --port 3000"
   },
   "private": true,
   "packageManager": "npm@11.19.0",
