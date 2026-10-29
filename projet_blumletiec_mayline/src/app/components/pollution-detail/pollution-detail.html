@@ -1,0 +1,33 @@
+
+<section class="detail-page">
+  <a class="back-link" routerLink="/pollutions">
+    ← Retour à la liste
+  </a>
+
+  <p class="info-message" *ngIf="chargement">
+    Chargement de la déclaration...
+  </p>
+
+  <p class="error-message" *ngIf="erreurMessage" role="alert">
+    {{ erreurMessage }}
+  </p>
+
+  <ng-container *ngIf="pollution as declaration">
+    <header class="page-header">
+      <div>
+        <h1>Détail de la déclaration</h1>
+        <p>Consultez les informations de cette pollution.</p>
+      </div>
+
+      <a
+        class="btn-primary"
+        [routerLink]="['/pollutions', declaration.id, 'modifier']">
+        Modifier la déclaration
+      </a>
+    </header>
+
+    <app-pollution-summary
+      [pollution]="declaration">
+    </app-pollution-summary>
+  </ng-container>
+</section>

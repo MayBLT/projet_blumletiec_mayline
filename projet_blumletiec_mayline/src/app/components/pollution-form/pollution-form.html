@@ -1,7 +1,9 @@
 <!-- Formulaire de déclaration d'une pollution -->
 <form [formGroup]="pollutionForm" (ngSubmit)="onSubmit()">
 
-  <h2>Déclarer une pollution</h2>
+  <h2>
+  {{ pollution ? 'Modifier une déclaration' : 'Déclarer une pollution' }}
+</h2>
 
   <!-- Champ du titre -->
   <div class="form-group">
@@ -180,6 +182,8 @@
   </div>
 
   <!-- Bouton de validation du formulaire -->
-  <button type="submit">Valider la déclaration</button>
+  <button type="submit" [disabled]="isSubmitting">
+  {{ isSubmitting ? 'Envoi en cours...' : 'Valider la déclaration' }}
+</button>
 
 </form>

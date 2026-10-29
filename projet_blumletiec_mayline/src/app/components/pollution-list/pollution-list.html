@@ -1,0 +1,136 @@
+
+<section class="pollution-page">
+  <header class="page-header">
+    <div>
+      <h1>Déclarations de pollution</h1>
+      <p>Consultez et gérez les pollutions signalées.</p>
+    </div>
+
+    <a class="btn-primary" routerLink="/pollutions/nouvelle">
+      + Nouvelle déclaration
+    </a>
+  </header>
+
+  <!-- Affichage du chargement -->
+  <p class="info-message" *ngIf="chargement">
+    Chargement des déclarations...
+  </p>
+
+  <!-- Affichage des erreurs -->
+  <p class="error-message" *ngIf="erreurMessage" role="alert">
+    {{ erreurMessage }}
+  </p>
+
+  <!-- Filtres de recherche -->
+  <section class="filters" aria-labelledby="filters-title">
+    <h2 id="filters-title">Filtrer les déclarations</h2>
+
+    <div class="filters-grid">
+      <div class="form-group">
+        <label for="filtreType">Type de pollution</label>
+        <select
+          id="filtreType"
+          name="filtreType"
+          [(ngModel)]="filtreType"
+          (ngModelChange)="appliquerFiltres()"
+        >
+          <option value="">Tous les types</option>
+          <option value="Air">Pollution de l'air</option>
+          <option value="Eau">Pollution de l'eau</option>
+          <option value="Sol">Pollution du sol</option>
+          <option value="Sonore">Pollution sonore</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="filtreVille">Ville</label>
+        <input
+          id="filtreVille"
+          name="filtreVille"
+          type="text"
+          placeholder="Rechercher une ville"
+          [(ngModel)]="filtreVille"
+          (ngModelChange)="appliquerFiltres()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="filtreDate">Date de constatation</label>
+        <input
+          id="filtreDate"
+          name="filtreDate"
+          type="date"
+          [(ngModel)]="filtreDate"
+          (ngModelChange)="appliquerFiltres()"
+        />
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn-secondary"
+      (click)="reinitialiserFiltres()"
+    >
+      Réinitialiser les filtres
+    </button>
+  </section>
+
+  <!-- Résultats -->
+  <section class="results">
+    <h2>
+      Résultats
+      <span class="result-count">{{ filteredPollutions.length }}</span>
+    </h2>
+
+    <p class="info-message" *ngIf="!chargement && filteredPollutions.length === 0">
+      Aucune déclaration ne correspond aux critères sélectionnés.
+    </p>
+
+    <div class="pollution-grid" *ngIf="!chargement">
+      <article class="pollution-card" *ngFor="let pollution of filteredPollutions">
+        <div class="card-heading">
+          <span class="pollution-type">{{ pollution.type }}</span>
+          <time [attr.datetime]="pollution.date">{{ pollution.date }}</time>
+        </div>
+
+        <h3>{{ pollution.titre }}</h3>
+
+        <p class="location">
+          {{ pollution.ville }} ({{ pollution.codePostal }}), {{ pollution.pays }}
+        </p>
+
+        <p class="description">{{ pollution.description }}</p>
+
+        <p class="coordinates">
+          Latitude : {{ pollution.latitude }} |
+          Longitude : {{ pollution.longitude }}
+        </p>
+
+        <div class="card-actions">
+          <a
+            class="btn-secondary"
+            [routerLink]="['/pollutions', pollution.id]"
+          >
+            Détails
+          </a>
+
+          <a
+            class="btn-secondary"
+            [routerLink]="['/pollutions', pollution.id, 'modifier']"
+          >
+            Modifier
+          </a>
+
+          <button
+            type="button"
+            class="btn-danger"
+            (click)="supprimerPollution(pollution)"
+          >
+            Supprimer
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+</section>
