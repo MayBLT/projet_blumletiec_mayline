@@ -11,8 +11,7 @@ services:
     region: frankfurt
     plan: free
     rootDir: projet_blumletiec_mayline/backend
-    buildCommand: npm install
-    preDeployCommand: node init-db.js
+    buildCommand: npm install && node init-db.js
     startCommand: npm start
     healthCheckPath: /
     envVars:
