@@ -1,0 +1,15 @@
+﻿CREATE TABLE IF NOT EXISTS pollution (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    titre VARCHAR(255) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    date DATE NOT NULL,
+    code_postal VARCHAR(20) NOT NULL,
+    ville VARCHAR(150) NOT NULL,
+    pays VARCHAR(100) NOT NULL,
+    rue VARCHAR(255),
+    numero VARCHAR(20),
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL,
+    photo_url TEXT
+);
