@@ -6,9 +6,13 @@
       <p>Consultez et gérez les pollutions signalées.</p>
     </div>
 
-    <a class="btn-primary" routerLink="/pollutions/nouvelle">
-      + Nouvelle déclaration
-    </a>
+    <button
+  type="button"
+  class="btn-primary"
+  (click)="nouvelleDeclaration.emit()"
+>
+  + Nouvelle déclaration
+</button>
   </header>
 
   <!-- Affichage du chargement -->

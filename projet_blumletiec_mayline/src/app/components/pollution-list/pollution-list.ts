@@ -3,13 +3,15 @@
  * Composant chargé d'afficher et de filtrer les déclarations de pollution.
  * Il permet également de supprimer une déclaration.
  */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { Pollution } from '../../models/pollution';
 import { PollutionService } from '../../services/pollution.service';
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-pollution-list',
@@ -20,7 +22,10 @@ import { PollutionService } from '../../services/pollution.service';
 })
 export class PollutionList implements OnInit {
   // Service utilisé pour accéder aux déclarations enregistrées.
+    // Signale au composant principal qu'une nouvelle déclaration est demandée.
+  nouvelleDeclaration = output<void>();
   private readonly pollutionService = inject(PollutionService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   // Liste complète et liste filtrée des déclarations.
   pollutions: Pollution[] = [];
@@ -39,8 +44,13 @@ export class PollutionList implements OnInit {
    * Charge les déclarations dès l'ouverture du composant.
    */
   ngOnInit(): void {
+  // Charge les déclarations uniquement dans le navigateur.
+  if (isPlatformBrowser(this.platformId)) {
     this.chargerPollutions();
+  } else {
+    this.chargement = false;
   }
+}
 
   /**
    * Récupère les déclarations depuis l'API.
