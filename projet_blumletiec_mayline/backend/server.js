@@ -1,45 +1,56 @@
-﻿require('dotenv').config();
+﻿
+// Chargement des variables d'environnement.
+require('dotenv').config();
 
 const express = require('express');
-const { Pool } = require('pg');
+const cors = require('cors');
+
+const sequelize = require('./config/database');
+const User = require('./models/User');
+
+const pollutionsRoutes = require('./routes/pollutions');
+const usersRoutes = require('./routes/users');
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production'
-    ? { rejectUnauthorized: false }
-    : false
-});
+// Autorise les requêtes provenant du frontend Angular.
+app.use(cors());
+
+// Permet à Express de lire les données JSON.
+app.use(express.json());
 
 // Route de vérification de l'API.
 app.get('/', (req, res) => {
-  res.json({ message: 'API pollution opérationnelle' });
-});
-
-// Récupère toutes les pollutions enregistrées dans PostgreSQL.
-app.get('/pollution', async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT
-        id, titre, type, description, date,
-        code_postal AS "codePostal",
-        ville, pays, rue, numero, latitude, longitude,
-        photo_url AS "photoUrl"
-      FROM pollution
-      ORDER BY id
-    `);
-
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des pollutions :', error);
-    res.status(500).json({
-      erreur: 'Impossible de récupérer les pollutions.'
+    res.json({
+        message: 'API pollution opérationnelle'
     });
-  }
 });
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`API démarrée sur le port ${port}`);
-});
+// Branchement des routes REST.
+app.use('/api/pollutions', pollutionsRoutes);
+app.use('/api/users', usersRoutes);
+
+// Démarrage du serveur après vérification de la base.
+async function startServer() {
+    try {
+        // Vérification de la connexion PostgreSQL.
+        await sequelize.authenticate();
+        console.log('Connexion PostgreSQL établie.');
+
+        // Crée la table users uniquement si elle n'existe pas.
+        await User.sync();
+        console.log('Table users vérifiée.');
+
+        // Démarrage du serveur Express.
+        app.listen(port, '0.0.0.0', () => {
+            console.log(`API démarrée sur le port ${port}`);
+        });
+
+    } catch (error) {
+        console.error('Erreur de démarrage de l API :', error);
+        process.exit(1);
+    }
+}
+
+startServer();
