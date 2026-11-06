@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject } from '@angular/core';
+import {Component,OnInit,inject,Input,Output,EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -15,6 +15,14 @@ import { PollutionForm } from '../pollution-form/pollution-form';
   styleUrl: './pollution-editor.css',
 })
 export class PollutionEditor implements OnInit {
+    // Indique si le composant est affiché dans l'interface à onglets.
+  @Input() dansOnglet = false;
+
+  // Signale la fin d'une opération au composant principal.
+  @Output() enregistrementTermine = new EventEmitter<void>();
+
+  // Signale une demande de retour à la liste.
+  @Output() annulation = new EventEmitter<void>();
   private readonly pollutionService = inject(PollutionService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -70,10 +78,7 @@ export class PollutionEditor implements OnInit {
       },
     });
   }
-
   enregistrer(pollution: Pollution): void {
-    console.log('Événement reçu par enregistrer()', pollution);
-
     this.erreurMessage = '';
     this.envoiEnCours = true;
 
@@ -81,9 +86,17 @@ export class PollutionEditor implements OnInit {
     if (this.pollutionId === null) {
       this.pollutionService.create(pollution).subscribe({
         next: (declarationCreee) => {
-          this.router.navigate(['/pollutions', declarationCreee.id]);
+          this.envoiEnCours = false;
+
+          if (this.dansOnglet) {
+            // Retour à la liste sans changer de page.
+            this.enregistrementTermine.emit();
+          } else {
+            this.router.navigate(['/pollutions', declarationCreee.id]);
+          }
         },
         error: () => {
+          this.envoiEnCours = false;
           this.erreurMessage =
             'La création a échoué. Vérifiez que le serveur API fonctionne.';
         },
@@ -95,12 +108,20 @@ export class PollutionEditor implements OnInit {
     // Modification d'une déclaration existante.
     this.pollutionService.update(this.pollutionId, pollution).subscribe({
       next: () => {
-        this.router.navigate(['/pollutions', this.pollutionId]);
+        this.envoiEnCours = false;
+
+        if (this.dansOnglet) {
+          this.enregistrementTermine.emit();
+        } else {
+          this.router.navigate(['/pollutions', this.pollutionId]);
+        }
       },
       error: () => {
+        this.envoiEnCours = false;
         this.erreurMessage =
           'La modification a échoué. Veuillez réessayer.';
       },
     });
   }
+
 }

@@ -1,2 +1,59 @@
 
-<router-outlet></router-outlet>
+<div class="application">
+
+  <header class="header">
+    <h1>Gestion des pollutions</h1>
+    <p>Bienvenue sur votre espace de gestion.</p>
+  </header>
+
+  <nav class="onglets">
+    <button
+      [class.actif]="ongletActif === 'pollutions'"
+      (click)="changerOnglet('pollutions')">
+      Pollutions
+    </button>
+
+    <button
+      [class.actif]="ongletActif === 'inscription'"
+      (click)="changerOnglet('inscription')">
+      Inscription
+    </button>
+
+    <button
+      [class.actif]="ongletActif === 'connexion'"
+      (click)="changerOnglet('connexion')">
+      Connexion
+    </button>
+  </nav>
+
+  <main class="contenu">
+
+    @if (ongletActif === 'pollutions') {
+
+  @if (!afficherEditeur) {
+    <app-pollution-list
+      (nouvelleDeclaration)="ouvrirNouvelleDeclaration()"
+    ></app-pollution-list>
+  }
+
+  @if (afficherEditeur) {
+    <app-pollution-editor
+      [dansOnglet]="true"
+      (enregistrementTermine)="fermerEditeur()"
+      (annulation)="fermerEditeur()"
+    ></app-pollution-editor>
+  }
+
+}
+
+    @if (ongletActif === 'inscription') {
+      <app-inscription></app-inscription>
+    }
+
+    @if (ongletActif === 'connexion') {
+      <app-connexion></app-connexion>
+    }
+
+  </main>
+
+</div>

@@ -1,43 +1,60 @@
-/* Mise en forme générale de la page */
-:host {
-  display: block;
+
+.application {
   min-height: 100vh;
-  background-color: #f5f3ff;
+  background: #f4f4f6;
+  font-family: Arial, sans-serif;
 }
 
-/* Conteneur central de l'application */
-.container {
-  width: min(100% - 32px, 760px);
-  margin: 0 auto;
-  padding: 40px 0;
-}
-
-/* En-tête de la page */
-.page-header {
-  margin-bottom: 28px;
+.header {
+  padding: 25px;
+  background: #ffffff;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Titre principal */
-.page-header h1 {
-  margin-bottom: 10px;
-  color: #6d28d9;
+.header h1 {
+  margin: 0;
+  color: #222222;
+  font-size: 28px;
 }
 
-/* Texte d'introduction */
-.page-header p {
-  color: #4b5563;
-  line-height: 1.5;
+.header p {
+  margin: 8px 0 0;
+  color: #777777;
+  font-size: 14px;
 }
 
-/* Adaptation aux petits écrans */
-@media (max-width: 600px) {
-  .container {
-    width: min(100% - 20px, 760px);
-    padding: 24px 0;
-  }
+.onglets {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  background: #ffffff;
+  border-top: 1px solid #eeeeee;
+}
 
-  .page-header h1 {
-    font-size: 26px;
-  }
+.onglets button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 7px;
+  background: #eeeeee;
+  color: #444444;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.onglets button:hover {
+  background: #f8dce9;
+  color: #bd3674;
+}
+
+.onglets button.actif {
+  background: #d94b8b;
+  color: #ffffff;
+}
+
+.contenu {
+  padding: 25px;
 }
