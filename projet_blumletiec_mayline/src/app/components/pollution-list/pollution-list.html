@@ -106,7 +106,23 @@
 
         <p class="description">{{ pollution.description }}</p>
 
-        <p class="coordinates">
+<!-- Affichage de l'indice et du niveau de dangerosité -->
+<div
+  class="pollution-danger"
+  [appHighlightPollution]="pollution.indiceDangerosite ?? 0"
+>
+  <span>
+    Indice de dangerosité :
+    <strong>{{ pollution.indiceDangerosite ?? 0 }}</strong>
+  </span>
+
+  <span>
+    Niveau :
+    <strong>{{ (pollution.indiceDangerosite ?? 0) | pollutionLevel }}</strong>
+  </span>
+</div>
+
+<p class="coordinates">
           Latitude : {{ pollution.latitude }} |
           Longitude : {{ pollution.longitude }}
         </p>

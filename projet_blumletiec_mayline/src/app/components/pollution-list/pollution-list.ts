@@ -7,6 +7,8 @@ import { Component, OnInit, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PollutionLevelPipe } from '../../shared/pipes/pollution-level-pipe';
+import { HighlightPollution } from '../../shared/directives/highlight-pollution';
 
 import { Pollution } from '../../models/pollution';
 import { PollutionService } from '../../services/pollution.service';
@@ -16,7 +18,13 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-pollution-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+  CommonModule,
+  FormsModule,
+  RouterLink,
+  PollutionLevelPipe,
+  HighlightPollution
+],
   templateUrl: './pollution-list.html',
   styleUrl: './pollution-list.css',
 })

@@ -8,12 +8,15 @@ import { CommonModule } from '@angular/common';
 // Importe le modèle définissant les données d'une pollution.
 import { Pollution } from '../../models/pollution';
 
+import { PollutionLevelPipe } from '../../shared/pipes/pollution-level-pipe';
+
 @Component({
   // Nom de la balise utilisée pour afficher ce composant dans un template.
   selector: 'app-pollution-summary',
 
   // Modules nécessaires au fonctionnement du template.
-  imports: [CommonModule],
+
+  imports: [CommonModule, PollutionLevelPipe],
 
   // Fichiers HTML et CSS associés au composant.
   templateUrl: './pollution-summary.html',
