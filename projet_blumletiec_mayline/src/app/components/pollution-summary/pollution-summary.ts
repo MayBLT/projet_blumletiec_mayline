@@ -1,6 +1,10 @@
-// Importe les éléments nécessaires à la création du composant
-// et à la réception des données depuis un autre composant.
-import { Component, Input } from '@angular/core';
+
+// Importe les éléments nécessaires à la création du composant.
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 // Importe les directives Angular communes, notamment *ngIf.
 import { CommonModule } from '@angular/common';
@@ -8,14 +12,17 @@ import { CommonModule } from '@angular/common';
 // Importe le modèle définissant les données d'une pollution.
 import { Pollution } from '../../models/pollution';
 
+// Importe le pipe permettant d'afficher le niveau de pollution.
 import { PollutionLevelPipe } from '../../shared/pipes/pollution-level-pipe';
 
 @Component({
-  // Nom de la balise utilisée pour afficher ce composant dans un template.
+  // Nom de la balise utilisée pour afficher ce composant.
   selector: 'app-pollution-summary',
 
-  // Modules nécessaires au fonctionnement du template.
+  // Active la détection des changements optimisée.
+  changeDetection: ChangeDetectionStrategy.OnPush,
 
+  // Modules nécessaires au fonctionnement du template.
   imports: [CommonModule, PollutionLevelPipe],
 
   // Fichiers HTML et CSS associés au composant.
