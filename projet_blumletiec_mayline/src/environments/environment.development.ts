@@ -1,7 +1,7 @@
 /**
- * Configuration de l'environnement de développement local.
+ * Configuration de l'environnement de développement.
  */
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'http://localhost:3001/api',
 };
