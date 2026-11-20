@@ -54,6 +54,15 @@ const Pollution = sequelize.define('Pollution', {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
+    indiceDangerosite: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        field: 'indice_dangerosite',
+        validate: {
+            min: 0
+        }
+    },
     photoUrl: {
         type: DataTypes.TEXT,
         allowNull: true,

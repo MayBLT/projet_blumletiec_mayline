@@ -15,7 +15,8 @@ function validatePollution(data) {
         'ville',
         'pays',
         'latitude',
-        'longitude'
+        'longitude',
+        'indiceDangerosite'
     ];
 
     for (const field of requiredFields) {
@@ -39,6 +40,13 @@ function validatePollution(data) {
         Number(data.longitude) > 180) {
         return 'Les coordonnées GPS sont invalides.';
     }
+    // Vérifie que l'indice est un entier positif ou nul.
+    if (
+        !Number.isInteger(Number(data.indiceDangerosite)) ||
+        Number(data.indiceDangerosite) < 0
+    ) {
+    return 'L’indice de dangerosité doit être un entier positif ou nul.';
+}
 
     return null;
 }
@@ -135,6 +143,7 @@ router.put('/:id', async (req, res) => {
             'numero',
             'latitude',
             'longitude',
+            'indiceDangerosite',
             'photoUrl'
         ];
 

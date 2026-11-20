@@ -34,6 +34,37 @@
       <option value="Autre">Autre</option>
     </select>
 
+    <!-- Indice de dangerosité -->
+<div class="form-group">
+  <label for="indiceDangerosite">Indice de dangerosité *</label>
+
+  <input
+    id="indiceDangerosite"
+    type="number"
+    min="0"
+    step="1"
+    formControlName="indiceDangerosite"
+    placeholder="Ex. : 35"
+  >
+
+  <small
+    class="error"
+    *ngIf="pollutionForm.get('indiceDangerosite')?.touched
+    && pollutionForm.get('indiceDangerosite')?.hasError('required')"
+  >
+    L'indice de dangerosité est obligatoire.
+  </small>
+
+  <small
+    class="error"
+    *ngIf="pollutionForm.get('indiceDangerosite')?.touched
+    && (pollutionForm.get('indiceDangerosite')?.hasError('min')
+    || pollutionForm.get('indiceDangerosite')?.hasError('pattern'))"
+  >
+    L'indice doit être un entier positif ou nul.
+  </small>
+</div>
+
     <!-- Message affiché si aucun type n'est sélectionné -->
     <small class="error" *ngIf="pollutionForm.get('type')?.touched
       && pollutionForm.get('type')?.invalid">

@@ -63,6 +63,16 @@ export class PollutionForm implements OnChanges {
       // Le type de pollution doit être sélectionné.
       type: ['', Validators.required],
 
+      // Indice de dangerosité : entier positif ou nul.
+      indiceDangerosite: [
+        0,
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.pattern(/^\d+$/)
+       ]
+      ],
+
       // La description est obligatoire et doit contenir au moins 10 caractères.
       description: ['', [Validators.required, Validators.minLength(10)]],
 
@@ -149,7 +159,7 @@ finishSubmission(): void {
       ...(this.pollution?.id !== undefined
         ? { id: this.pollution.id }
         : {}),
-
+      indiceDangerosite: Number(this.pollutionForm.value.indiceDangerosite),
       latitude: Number(this.pollutionForm.value.latitude),
       longitude: Number(this.pollutionForm.value.longitude),
     };
