@@ -20,5 +20,6 @@ export interface Pollution {
 
   latitude: number;    // Coordonnée géographique nord-sud
   longitude: number;   // Coordonnée géographique est-ouest
+  indiceDangerosite?: number; // Indice de dangerosité (facultatif)
   photoUrl?: string;   // URL de la photo (facultative)
 }
