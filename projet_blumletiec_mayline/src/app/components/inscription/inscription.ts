@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { TimeoutError } from 'rxjs';
 import { Inscription as InscriptionService } from '../../services/inscription';
 
 @Component({
@@ -50,13 +50,33 @@ export class Inscription {
           state: { message: this.messageSucces },
         });
       },
-      error: (erreur: HttpErrorResponse) => {
-        this.chargement = false;
+      error: (erreur: unknown) => {
+  this.chargement = false;
 
-        this.messageErreur =
-          erreur.error?.erreur ||
-          'Une erreur est survenue lors de la création du compte.';
-      },
+  // Délai d'attente dépassé.
+  if (erreur instanceof TimeoutError) {
+    this.messageErreur =
+      'Le serveur met trop de temps à répondre. Veuillez réessayer.';
+    return;
+  }
+
+  // L'adresse e-mail est déjà enregistrée.
+  if (erreur instanceof HttpErrorResponse && erreur.status === 409) {
+    this.messageErreur =
+      'Cette adresse e-mail est déjà utilisée. Vous pouvez vous connecter.';
+    return;
+  }
+
+  // Erreur de validation renvoyée par le backend.
+  if (erreur instanceof HttpErrorResponse && erreur.status === 400) {
+    this.messageErreur =
+      erreur.error?.erreur || 'Veuillez vérifier les informations saisies.';
+    return;
+  }
+
+  this.messageErreur =
+    'Une erreur est survenue lors de la création du compte. Veuillez réessayer.';
+},
     });
   }
 }
