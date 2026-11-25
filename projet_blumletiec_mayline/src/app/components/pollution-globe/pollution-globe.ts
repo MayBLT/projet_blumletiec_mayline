@@ -225,20 +225,28 @@ export class PollutionGlobe implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Convertit une latitude et une longitude en position 3D.
    */
-  private convertirCoordonnees(
-    latitude: number,
-    longitude: number
-  ): THREE.Vector3 {
+  /**
+ * Convertit une latitude et une longitude GPS en position 3D.
+ * La formule tient compte de l'orientation de la texture de la planète.
+ */
+/**
+ * Convertit les coordonnées GPS en position 3D
+ * en respectant l'orientation de la texture SphereGeometry.
+ */
+private convertirCoordonnees(
+  latitude: number,
+  longitude: number
+): THREE.Vector3 {
 
-    const lat = THREE.MathUtils.degToRad(latitude);
-    const lon = THREE.MathUtils.degToRad(longitude);
+  const lat = THREE.MathUtils.degToRad(latitude);
+  const lon = THREE.MathUtils.degToRad(longitude);
 
-    return new THREE.Vector3(
-      -Math.cos(lat) * Math.sin(lon),
-      Math.sin(lat),
-      Math.cos(lat) * Math.cos(lon)
-    );
-  }
+  return new THREE.Vector3(
+    Math.cos(lat) * Math.cos(lon),
+    Math.sin(lat),
+    -Math.cos(lat) * Math.sin(lon)
+  );
+}
 
   /**
    * Crée un marqueur rose pour chaque pollution géolocalisée.
