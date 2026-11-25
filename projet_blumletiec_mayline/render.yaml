@@ -31,7 +31,7 @@ services:
     region: frankfurt
     plan: free
     rootDir: projet_blumletiec_mayline
-    buildCommand: npm install && npm run build
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm run serve:ssr:projet1
     envVars:
       - key: NODE_ENV
