@@ -1,29 +1,47 @@
 
 <section class="pollution-page">
+
+  <!-- En-tête de la page -->
   <header class="page-header">
     <div>
       <h1>Déclarations de pollution</h1>
       <p>Consultez et gérez les pollutions signalées.</p>
     </div>
 
-    <button
-  type="button"
-  class="btn-primary"
-  (click)="nouvelleDeclaration.emit()"
->
-  + Nouvelle déclaration
-</button>
+    <a
+      class="btn-primary"
+      routerLink="/pollutions/nouvelle"
+    >
+      + Nouvelle déclaration
+    </a>
   </header>
 
+  <!-- Disposition du globe et de la liste -->
+  <div class="pollution-layout">
+
+    <!-- Globe terrestre interactif -->
+    <aside class="globe-column">
+      <app-pollution-globe
+        [pollutions]="pollutions"
+      />
+    </aside>
+
+    <!-- Liste des déclarations -->
+    <div class="list-column">
+
   <!-- Affichage du chargement -->
-  <p class="info-message" *ngIf="chargement">
-    Chargement des déclarations...
-  </p>
+  @if (chargement) {
+    <p class="info-message">
+      Chargement des déclarations...
+    </p>
+  }
 
   <!-- Affichage des erreurs -->
-  <p class="error-message" *ngIf="erreurMessage" role="alert">
-    {{ erreurMessage }}
-  </p>
+  @if (erreurMessage) {
+    <p class="error-message" role="alert">
+      {{ erreurMessage }}
+    </p>
+  }
 
   <!-- Filtres de recherche -->
   <section class="filters" aria-labelledby="filters-title">
@@ -87,70 +105,94 @@
       <span class="result-count">{{ filteredPollutions.length }}</span>
     </h2>
 
-    <p class="info-message" *ngIf="!chargement && filteredPollutions.length === 0">
-      Aucune déclaration ne correspond aux critères sélectionnés.
-    </p>
+    @if (!chargement && filteredPollutions.length === 0) {
+      <p class="info-message">
+        Aucune déclaration ne correspond aux critères sélectionnés.
+      </p>
+    }
 
-    <div class="pollution-grid" *ngIf="!chargement">
-      <article class="pollution-card" *ngFor="let pollution of filteredPollutions">
-        <div class="card-heading">
-          <span class="pollution-type">{{ pollution.type }}</span>
-          <time [attr.datetime]="pollution.date">{{ pollution.date }}</time>
-        </div>
+    @if (!chargement) {
+      @for (pollution of filteredPollutions; track pollution.id) {
+        <article class="pollution-card">
+          <div class="card-heading">
+            <span class="pollution-type">{{ pollution.type }}</span>
+            <time [attr.datetime]="pollution.date">
+              {{ pollution.date }}
+            </time>
+          </div>
 
-        <h3>{{ pollution.titre }}</h3>
+          <h3>{{ pollution.titre }}</h3>
 
-        <p class="location">
-          {{ pollution.ville }} ({{ pollution.codePostal }}), {{ pollution.pays }}
-        </p>
+          <p class="location">
+            {{ pollution.ville }} ({{ pollution.codePostal }}), {{ pollution.pays }}
+          </p>
 
-        <p class="description">{{ pollution.description }}</p>
+          <p class="description">{{ pollution.description }}</p>
 
-<!-- Affichage de l'indice et du niveau de dangerosité -->
-<div
-  class="pollution-danger"
-  [appHighlightPollution]="pollution.indiceDangerosite ?? 0"
->
-  <span>
-    Indice de dangerosité :
-    <strong>{{ pollution.indiceDangerosite ?? 0 }}</strong>
-  </span>
+          <!-- Affichage de l'indice et du niveau de dangerosité -->
+          <div
+            class="pollution-danger"
+            [appHighlightPollution]="pollution.indiceDangerosite ?? 0"
+          >
+            <span>
+              Indice de dangerosité :
+              <strong>{{ pollution.indiceDangerosite ?? 0 }}</strong>
+            </span>
 
-  <span>
-    Niveau :
-    <strong>{{ (pollution.indiceDangerosite ?? 0) | pollutionLevel }}</strong>
-  </span>
+            <span>
+              Niveau :
+              <strong>
+                {{ (pollution.indiceDangerosite ?? 0) | pollutionLevel }}
+              </strong>
+            </span>
+          </div>
+
+          <div class="coordinates">
+  <p>
+    Latitude : {{ pollution.latitude }} |
+    Longitude : {{ pollution.longitude }}
+  </p>
+
+  <a
+    class="btn-secondary map-link"
+    [href]="getOpenStreetMapUrl(pollution)"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span aria-hidden="true">📍</span>
+    Voir la position sur OpenStreetMap
+  </a>
 </div>
 
-<p class="coordinates">
-          Latitude : {{ pollution.latitude }} |
-          Longitude : {{ pollution.longitude }}
-        </p>
+          <div class="card-actions">
+            <a
+              class="btn-secondary"
+              [routerLink]="['/pollutions', pollution.id]"
+            >
+              Détails
+            </a>
 
-        <div class="card-actions">
-          <a
-            class="btn-secondary"
-            [routerLink]="['/pollutions', pollution.id]"
-          >
-            Détails
-          </a>
+            <a
+              class="btn-secondary"
+              [routerLink]="['/pollutions', pollution.id, 'modifier']"
+            >
+              Modifier
+            </a>
 
-          <a
-            class="btn-secondary"
-            [routerLink]="['/pollutions', pollution.id, 'modifier']"
-          >
-            Modifier
-          </a>
-
-          <button
-            type="button"
-            class="btn-danger"
-            (click)="supprimerPollution(pollution)"
-          >
-            Supprimer
-          </button>
-        </div>
-      </article>
-    </div>
+            <button
+              type="button"
+              class="btn-danger"
+              (click)="supprimerPollution(pollution)"
+            >
+              Supprimer
+            </button>
+          </div>
+        </article>
+      }
+    }
   </section>
-</section>
+
+    </div> <!-- Fin de list-column -->
+  </div> <!-- Fin de pollution-layout -->
+
+</section> <!-- Fin de pollution-page -->

@@ -18,17 +18,25 @@
     </p>
   </header>
 
-  <p class="info-message" *ngIf="chargement">
-    Chargement de la déclaration...
-  </p>
+  <!-- Affichage du chargement -->
+  @if (chargement) {
+    <p class="info-message">
+      Chargement de la déclaration...
+    </p>
+  }
 
-  <p class="error-message" *ngIf="erreurMessage" role="alert">
-    {{ erreurMessage }}
-  </p>
+  <!-- Affichage des erreurs -->
+  @if (erreurMessage) {
+    <p class="error-message" role="alert">
+      {{ erreurMessage }}
+    </p>
+  }
 
-  <app-pollution-form
-    *ngIf="!chargement && (pollutionId === null || pollution !== null)"
-    [pollution]="pollution"
-    (pollutionValidated)="enregistrer($event)">
-  </app-pollution-form>
+  <!-- Affichage du formulaire lorsque les données sont disponibles -->
+  @if (!chargement && (pollutionId === null || pollution !== null)) {
+    <app-pollution-form
+      [pollution]="pollution"
+      (pollutionValidated)="enregistrer($event)">
+    </app-pollution-form>
+  }
 </section>

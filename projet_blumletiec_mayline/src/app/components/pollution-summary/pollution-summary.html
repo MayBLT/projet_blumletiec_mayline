@@ -28,21 +28,27 @@
   <p><strong>Ville :</strong> {{ pollution.ville }}</p>
   <p><strong>Pays :</strong> {{ pollution.pays }}</p>
 
-  <p *ngIf="pollution.rue">
-    <strong>Rue :</strong> {{ pollution.rue }}
-  </p>
+  @if (pollution.rue) {
+    <p>
+      <strong>Rue :</strong> {{ pollution.rue }}
+    </p>
+  }
 
-  <p *ngIf="pollution.numero">
-    <strong>Numéro :</strong> {{ pollution.numero }}
-  </p>
+  @if (pollution.numero) {
+    <p>
+      <strong>Numéro :</strong> {{ pollution.numero }}
+    </p>
+  }
 
   <p><strong>Latitude :</strong> {{ pollution.latitude }}</p>
   <p><strong>Longitude :</strong> {{ pollution.longitude }}</p>
 
   <!-- Photo facultative -->
-  <div *ngIf="pollution.photoUrl">
-    <h3>Photo</h3>
-    <img [src]="pollution.photoUrl" alt="Photo de la pollution">
-  </div>
+  @if (pollution.photoUrl) {
+    <div>
+      <h3>Photo</h3>
+      <img [src]="pollution.photoUrl" alt="Photo de la pollution">
+    </div>
+  }
 
 </section>

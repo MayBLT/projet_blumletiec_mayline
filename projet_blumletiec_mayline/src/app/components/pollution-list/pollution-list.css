@@ -231,3 +231,12 @@
     padding: 1.25rem 0.75rem;
   }
 }
+
+/* Lien vers la position géographique */
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  text-decoration: none;
+}

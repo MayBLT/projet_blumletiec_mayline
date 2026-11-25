@@ -7,11 +7,11 @@ import {
   Component,
   OnInit,
   inject,
-  output,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   PLATFORM_ID
 } from '@angular/core';
+import { PollutionGlobe } from '../pollution-globe/pollution-globe';
 
 import {
   CommonModule,
@@ -39,7 +39,8 @@ import { PollutionService } from '../../services/pollution.service';
     FormsModule,
     RouterLink,
     PollutionLevelPipe,
-    HighlightPollution
+    HighlightPollution,
+    PollutionGlobe
   ],
 
   templateUrl: './pollution-list.html',
@@ -47,8 +48,6 @@ import { PollutionService } from '../../services/pollution.service';
 })
 export class PollutionList implements OnInit {
 
-  // Signale au composant principal qu'une nouvelle déclaration est demandée.
-  nouvelleDeclaration = output<void>();
 
   // Services et dépendances Angular.
   private readonly pollutionService = inject(PollutionService);
@@ -140,6 +139,17 @@ export class PollutionList implements OnInit {
     this.appliquerFiltres();
     this.cdr.markForCheck();
   }
+
+  /**
+ * Génère un lien OpenStreetMap à partir des coordonnées
+ * géographiques d'une déclaration.
+ */
+getOpenStreetMapUrl(pollution: Pollution): string {
+  const latitude = pollution.latitude;
+  const longitude = pollution.longitude;
+
+  return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=18/${latitude}/${longitude}`;
+}
 
   /**
    * Supprime une déclaration après confirmation.
