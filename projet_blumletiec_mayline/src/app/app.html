@@ -8,24 +8,41 @@
 
   <nav class="onglets">
 
-    <button
-      routerLink="/pollutions"
-      routerLinkActive="actif"
-      [routerLinkActiveOptions]="{ exact: true }">
-      Pollutions
-    </button>
+    @if (estAuthentifie()) {
+  <button
+    routerLink="/pollutions"
+    routerLinkActive="actif"
+    [routerLinkActiveOptions]="{ exact: true }">
+    Pollutions
+  </button>
+}
 
-    <button
-      routerLink="/inscription"
-      routerLinkActive="actif">
-      Inscription
-    </button>
+    @if (!estAuthentifie()) {
+      <button
+        routerLink="/inscription"
+        routerLinkActive="actif">
+        Inscription
+      </button>
 
-    <button
-      routerLink="/connexion"
-      routerLinkActive="actif">
-      Connexion
-    </button>
+      <button
+        routerLink="/connexion"
+        routerLinkActive="actif">
+        Connexion
+      </button>
+    }
+
+    @if (estAuthentifie() && utilisateur(); as user) {
+      <span class="utilisateur-connecte">
+        Connecté(e) : <strong>{{ user.nom }}</strong>
+      </span>
+
+      <button
+        type="button"
+        class="bouton-deconnexion"
+        (click)="deconnecter()">
+        Déconnexion
+      </button>
+    }
 
   </nav>
 

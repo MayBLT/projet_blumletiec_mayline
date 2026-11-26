@@ -27,6 +27,8 @@
 .onglets {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 20px;
   background: #ffffff;
@@ -55,6 +57,49 @@
   color: #ffffff;
 }
 
+/* Informations de l'utilisateur connecté. */
+.utilisateur-connecte {
+  padding: 10px 15px;
+  border-radius: 7px;
+  background: #f8dce9;
+  color: #444444;
+  font-size: 14px;
+}
+
+.utilisateur-connecte strong {
+  color: #bd3674;
+}
+
+/* Bouton de déconnexion. */
+.onglets button.bouton-deconnexion {
+  background: #333333;
+  color: #ffffff;
+}
+
+.onglets button.bouton-deconnexion:hover {
+  background: #bd3674;
+  color: #ffffff;
+}
+
 .contenu {
   padding: 25px;
+}
+
+/* Adaptation aux petits écrans. */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 23px;
+  }
+
+  .onglets {
+    padding: 15px 10px;
+  }
+
+  .onglets button {
+    padding: 10px 15px;
+  }
+
+  .contenu {
+    padding: 15px;
+  }
 }
