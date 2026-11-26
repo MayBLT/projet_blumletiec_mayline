@@ -121,6 +121,24 @@
   overflow-wrap: anywhere;
 }
 
+/* Affichage du niveau de dangerosité */
+.pollution-danger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  color: #29243b;
+  font-size: 0.95rem;
+}
+
+.pollution-danger strong {
+  font-weight: 700;
+}
+
 .coordinates {
   color: #716b80;
   font-size: 0.85rem;
@@ -212,4 +230,62 @@
   .pollution-page {
     padding: 1.25rem 0.75rem;
   }
+}
+
+/* Lien vers la position géographique */
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  text-decoration: none;
+}
+/* Disposition de la liste et du globe sur deux colonnes */
+.pollution-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* La liste reste dans la colonne de gauche */
+.list-column {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+/* Le globe est placé à droite */
+.globe-column {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
+/* Adaptation aux écrans plus petits */
+@media (max-width: 900px) {
+  .pollution-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(350px, 0.85fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+  .list-column {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+  .globe-column {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
 }

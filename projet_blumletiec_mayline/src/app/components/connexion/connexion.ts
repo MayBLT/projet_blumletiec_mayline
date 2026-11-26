@@ -4,6 +4,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TimeoutError } from 'rxjs';
 
 import { Inscription as InscriptionService } from '../../services/inscription';
 
@@ -60,13 +61,32 @@ export class Connexion {
 
         this.router.navigate(['/pollutions']);
       },
-      error: (erreur: HttpErrorResponse) => {
-        this.chargement = false;
+      error: (erreur: unknown) => {
+  this.chargement = false;
 
-        this.messageErreur =
-          erreur.error?.erreur ||
-          'Une erreur est survenue lors de la connexion.';
-      },
+  // Cas où le serveur met trop de temps à répondre.
+  if (erreur instanceof TimeoutError) {
+    this.messageErreur =
+      'Le serveur met trop de temps à répondre. Veuillez réessayer.';
+    return;
+  }
+
+  // Cas où les identifiants sont incorrects.
+  if (erreur instanceof HttpErrorResponse && erreur.status === 401) {
+    this.messageErreur = 'Adresse e-mail ou mot de passe incorrect.';
+    return;
+  }
+
+  // Erreur de validation renvoyée par le backend.
+  if (erreur instanceof HttpErrorResponse && erreur.status === 400) {
+    this.messageErreur =
+      erreur.error?.erreur || 'Veuillez vérifier les informations saisies.';
+    return;
+  }
+
+  this.messageErreur =
+    'Une erreur est survenue lors de la connexion. Veuillez réessayer.';
+},
     });
   }
 }

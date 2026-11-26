@@ -63,6 +63,17 @@ export class PollutionForm implements OnChanges {
       // Le type de pollution doit être sélectionné.
       type: ['', Validators.required],
 
+      // Indice de dangerosité : entier compris entre 1 et 100.
+indiceDangerosite: [
+  1,
+  [
+    Validators.required,
+    Validators.min(1),
+    Validators.max(100),
+    Validators.pattern(/^\d+$/)
+  ]
+],
+
       // La description est obligatoire et doit contenir au moins 10 caractères.
       description: ['', [Validators.required, Validators.minLength(10)]],
 
@@ -104,7 +115,13 @@ export class PollutionForm implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['pollution'] && this.pollution !== null) {
       // Préremplit le formulaire avec les données existantes.
-      this.pollutionForm.patchValue(this.pollution);
+      this.pollutionForm.patchValue({
+  ...this.pollution,
+  indiceDangerosite: Math.min(
+    100,
+    Math.max(1, Math.round(Number(this.pollution.indiceDangerosite) || 1))
+  )
+});
     }
   }
 
@@ -149,7 +166,7 @@ finishSubmission(): void {
       ...(this.pollution?.id !== undefined
         ? { id: this.pollution.id }
         : {}),
-
+      indiceDangerosite: Number(this.pollutionForm.value.indiceDangerosite),
       latitude: Number(this.pollutionForm.value.latitude),
       longitude: Number(this.pollutionForm.value.longitude),
     };

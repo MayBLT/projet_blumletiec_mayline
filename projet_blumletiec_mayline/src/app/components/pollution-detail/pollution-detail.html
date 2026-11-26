@@ -4,15 +4,22 @@
     ← Retour à la liste
   </a>
 
-  <p class="info-message" *ngIf="chargement">
-    Chargement de la déclaration...
-  </p>
+  <!-- Affichage du chargement -->
+  @if (chargement) {
+    <p class="info-message">
+      Chargement de la déclaration...
+    </p>
+  }
 
-  <p class="error-message" *ngIf="erreurMessage" role="alert">
-    {{ erreurMessage }}
-  </p>
+  <!-- Affichage des erreurs -->
+  @if (erreurMessage) {
+    <p class="error-message" role="alert">
+      {{ erreurMessage }}
+    </p>
+  }
 
-  <ng-container *ngIf="pollution as declaration">
+  <!-- Affichage des détails de la pollution -->
+  @if (pollution; as declaration) {
     <header class="page-header">
       <div>
         <h1>Détail de la déclaration</h1>
@@ -21,13 +28,15 @@
 
       <a
         class="btn-primary"
-        [routerLink]="['/pollutions', declaration.id, 'modifier']">
+        [routerLink]="['/pollutions', declaration.id, 'modifier']"
+      >
         Modifier la déclaration
       </a>
     </header>
 
     <app-pollution-summary
-      [pollution]="declaration">
+      [pollution]="declaration"
+    >
     </app-pollution-summary>
-  </ng-container>
+  }
 </section>

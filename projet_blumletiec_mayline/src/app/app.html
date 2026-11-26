@@ -7,53 +7,30 @@
   </header>
 
   <nav class="onglets">
+
     <button
-      [class.actif]="ongletActif === 'pollutions'"
-      (click)="changerOnglet('pollutions')">
+      routerLink="/pollutions"
+      routerLinkActive="actif"
+      [routerLinkActiveOptions]="{ exact: true }">
       Pollutions
     </button>
 
     <button
-      [class.actif]="ongletActif === 'inscription'"
-      (click)="changerOnglet('inscription')">
+      routerLink="/inscription"
+      routerLinkActive="actif">
       Inscription
     </button>
 
     <button
-      [class.actif]="ongletActif === 'connexion'"
-      (click)="changerOnglet('connexion')">
+      routerLink="/connexion"
+      routerLinkActive="actif">
       Connexion
     </button>
+
   </nav>
 
   <main class="contenu">
-
-    @if (ongletActif === 'pollutions') {
-
-  @if (!afficherEditeur) {
-    <app-pollution-list
-      (nouvelleDeclaration)="ouvrirNouvelleDeclaration()"
-    ></app-pollution-list>
-  }
-
-  @if (afficherEditeur) {
-    <app-pollution-editor
-      [dansOnglet]="true"
-      (enregistrementTermine)="fermerEditeur()"
-      (annulation)="fermerEditeur()"
-    ></app-pollution-editor>
-  }
-
-}
-
-    @if (ongletActif === 'inscription') {
-      <app-inscription></app-inscription>
-    }
-
-    @if (ongletActif === 'connexion') {
-      <app-connexion></app-connexion>
-    }
-
+    <router-outlet></router-outlet>
   </main>
 
 </div>

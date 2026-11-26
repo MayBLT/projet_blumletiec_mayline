@@ -23,7 +23,10 @@
     "@angular/ssr": "^22.2.0",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "three": "^0.187.0",
+    "topojson-client": "^3.1.0",
+    "tslib": "^2.3.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@angular/build": "^22.2.0",
@@ -31,6 +34,8 @@
     "@angular/compiler-cli": "^22.2.0",
     "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
+    "@types/three": "^0.187.0",
+    "@types/topojson-client": "^3.1.5",
     "jsdom": "^30.0.0",
     "json-server": "^0.17.4",
     "prettier": "^3.8.1",

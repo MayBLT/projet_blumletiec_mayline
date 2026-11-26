@@ -1,0 +1,65 @@
+
+<section class="globe-container">
+
+  <header class="globe-header">
+    <div>
+      <h2>Carte des pollutions</h2>
+      <p>Explorez les déclarations sur le globe terrestre.</p>
+    </div>
+
+    <span class="pollution-count">
+      {{ pollutions.length }} signalement(s)
+    </span>
+  </header>
+
+  <div class="globe-wrapper">
+    <canvas #globeCanvas aria-label="Globe terrestre interactif avec les déclarations de pollution"></canvas>
+  </div>
+
+  <p class="globe-help">
+    Faites glisser pour tourner · Molette pour zoomer · Cliquez sur un point rose pour consulter une déclaration.
+  </p>
+
+  @if (selectedPollution) {
+    <article class="pollution-popup">
+
+      <button
+        type="button"
+        class="close-button"
+        aria-label="Fermer"
+        (click)="fermerDetails()"
+      >
+        ×
+      </button>
+
+      <span class="popup-label">Déclaration sélectionnée</span>
+
+      <h3>{{ selectedPollution.titre }}</h3>
+
+      <p>
+        {{ selectedPollution.ville }},
+        {{ selectedPollution.pays }}
+      </p>
+
+      <p>
+        Type : {{ selectedPollution.type }}
+      </p>
+
+      <p>
+        Indice de dangerosité :
+        {{ selectedPollution.indiceDangerosite ?? 'Non renseigné' }}
+      </p>
+
+      @if (selectedPollution.id !== undefined) {
+        <a
+          class="details-link"
+          [routerLink]="['/pollutions', selectedPollution.id]"
+        >
+          Consulter la déclaration
+        </a>
+      }
+
+    </article>
+  }
+
+</section>
