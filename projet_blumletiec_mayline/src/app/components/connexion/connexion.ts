@@ -5,8 +5,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TimeoutError } from 'rxjs';
+import { Store } from '@ngxs/store';
 
 import { Inscription as InscriptionService } from '../../services/inscription';
+import { Login } from '../../states/auth/auth.actions';
 
 @Component({
   selector: 'app-connexion',
@@ -20,6 +22,7 @@ export class Connexion {
   private readonly service = inject(InscriptionService);
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly store = inject(Store);
 
   chargement = false;
   messageErreur = '';
@@ -31,11 +34,11 @@ export class Connexion {
   });
 
   constructor() {
-  // Accède à l'historique uniquement dans le navigateur.
-  if (isPlatformBrowser(this.platformId)) {
-    this.messageSucces = window.history.state?.message || '';
+    // Accède à l'historique uniquement dans le navigateur.
+    if (isPlatformBrowser(this.platformId)) {
+      this.messageSucces = window.history.state?.message || '';
+    }
   }
-}
 
   connecter(): void {
     this.messageErreur = '';
@@ -46,47 +49,59 @@ export class Connexion {
     }
 
     this.chargement = true;
-
     const donnees = this.formulaire.getRawValue();
 
+    // Vérifie les identifiants auprès de l'API.
     this.service.connecter(donnees.email, donnees.motDePasse).subscribe({
       next: (reponse) => {
-        this.chargement = false;
+        const utilisateur = reponse.utilisateur;
 
-        // Conserve uniquement les informations publiques de l'utilisateur.
-        localStorage.setItem(
-          'utilisateur',
-          JSON.stringify(reponse.utilisateur)
-        );
-
-        this.router.navigate(['/pollutions']);
+        // Enregistre l'utilisateur dans le Store NGXS.
+        this.store.dispatch(
+          new Login({
+            id: utilisateur.id,
+            email: utilisateur.email,
+            nom: utilisateur.nom,
+          })
+        ).subscribe({
+          next: () => {
+            this.chargement = false;
+            this.router.navigate(['/pollutions']);
+          },
+          error: () => {
+            this.chargement = false;
+            this.messageErreur =
+              'Impossible d’enregistrer la session utilisateur.';
+          },
+        });
       },
       error: (erreur: unknown) => {
-  this.chargement = false;
+        this.chargement = false;
 
-  // Cas où le serveur met trop de temps à répondre.
-  if (erreur instanceof TimeoutError) {
-    this.messageErreur =
-      'Le serveur met trop de temps à répondre. Veuillez réessayer.';
-    return;
-  }
+        // Cas où le serveur met trop de temps à répondre.
+        if (erreur instanceof TimeoutError) {
+          this.messageErreur =
+            'Le serveur met trop de temps à répondre. Veuillez réessayer.';
+          return;
+        }
 
-  // Cas où les identifiants sont incorrects.
-  if (erreur instanceof HttpErrorResponse && erreur.status === 401) {
-    this.messageErreur = 'Adresse e-mail ou mot de passe incorrect.';
-    return;
-  }
+        // Cas où les identifiants sont incorrects.
+        if (erreur instanceof HttpErrorResponse && erreur.status === 401) {
+          this.messageErreur = 'Adresse e-mail ou mot de passe incorrect.';
+          return;
+        }
 
-  // Erreur de validation renvoyée par le backend.
-  if (erreur instanceof HttpErrorResponse && erreur.status === 400) {
-    this.messageErreur =
-      erreur.error?.erreur || 'Veuillez vérifier les informations saisies.';
-    return;
-  }
+        // Erreur de validation renvoyée par le backend.
+        if (erreur instanceof HttpErrorResponse && erreur.status === 400) {
+          this.messageErreur =
+            erreur.error?.erreur ||
+            'Veuillez vérifier les informations saisies.';
+          return;
+        }
 
-  this.messageErreur =
-    'Une erreur est survenue lors de la connexion. Veuillez réessayer.';
-},
+        this.messageErreur =
+          'Une erreur est survenue lors de la connexion. Veuillez réessayer.';
+      },
     });
   }
 }
